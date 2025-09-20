@@ -27,7 +27,7 @@ services:
     ports:
       - "8083:8083"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8083/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
