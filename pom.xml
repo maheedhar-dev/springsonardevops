@@ -44,7 +44,7 @@
 		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -73,10 +73,14 @@
 	</dependencies>
 
 	<build>
-		<plugins>
+        <finalName>app</finalName>
+        <plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>app</finalName>
+                </configuration>
 			</plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -88,13 +92,24 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+                    <!-- Generate reports -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                            <outputEncoding>UTF-8</outputEncoding>
+                            <formats>
+                                <format>HTML</format>
+                                <format>XML</format>
+                            </formats>
+                        </configuration>
                     </execution>
+
+                    <!-- Enforce min coverage -->
                     <execution>
                         <id>check</id>
                         <goals>
@@ -106,7 +121,7 @@
                                 <rule>
                                     <element>PACKAGE</element>
                                     <includes>
-                                        <include>com/sonar/devops/service/*</include>
+                                        <include>com.sonar.devops.service.*</include>
                                     </includes>
                                     <limits>
                                         <limit>
@@ -120,7 +135,7 @@
                                 <rule>
                                     <element>PACKAGE</element>
                                     <includes>
-                                        <include>com/sonar/devops/controller/*</include>
+                                        <include>com.sonar.devops.controller.*</include>
                                     </includes>
                                     <limits>
                                         <limit>
