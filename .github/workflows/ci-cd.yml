@@ -47,6 +47,11 @@ jobs:
       - name: Build Docker images
         run: docker compose build
 
+      - name: Tag docker image
+        run: |
+          docker tag springsonardevops-app maheedhar429/springsonardevops:latest
+          docker tag springsonardevops-app maheedhar429/springsonardevops:${{ github.sha }}
+
       - name: Start services
         run: docker compose up -d
 
@@ -84,4 +89,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker image
-        run: docker push maheedhar429/springsonardevops:latest
+        run: |
+          docker push maheedhar429/springsonardevops:latest
+          docker push maheedhar429/springsonardevops:${{ github.sha }}
